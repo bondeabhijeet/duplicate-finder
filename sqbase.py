@@ -17,7 +17,7 @@ def CreateTable(cur, TABLE_NAME):
 def FillDatabase(duplicates, cur, TABLE_NAME):             # FillDatabase([['0bd2c1d8ecd9daba0e2471ba75ad6adefc7051', '154 Bytes', 'E:\\PROGRAMS\\YoutubeData\\.git\\objects\\fe\\0bd2c1d8ecd9daba0e2471ba75ad6adefc7051']])
 
     for key,value in duplicates.items():                                                                 # Itterating over INNER list to get elements different attributes
-        if len(value) > 1:
+        if len(value) > 0:
             for i in range(0, len(value)):
                 cur.execute(f'INSERT INTO {TABLE_NAME} VALUES (:hash, :paths)',       # Seperating the attributes and adding them to database
                 {
