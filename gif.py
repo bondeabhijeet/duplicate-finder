@@ -42,13 +42,15 @@ class ImageLabel(tk.Label):
             self.after(self.delay, self.next_frame)
 
 
-#demo :
-root = tk.Tk()
-lbl = ImageLabel(root)
-root.overrideredirect(True)
-lbl.pack()
-lbl.load('ok.gif')
-root.eval('tk::PlaceWindow . center')
-b = ttk.Button(root, text="Stop", command=EXIT.exit).pack()
+def loading_gif():
+    #demo :
+    root = tk.Tk()
+    lbl = ImageLabel(root)
+    root.overrideredirect(True)
+    lbl.pack()
+    lbl.load('ok.gif')
+    root.eval('tk::PlaceWindow . center')
+    b = ttk.Button(root, text="Stop", command=EXIT.exit).pack()
 
-root.mainloop()
+    root.mainloop()
+loading_gif()

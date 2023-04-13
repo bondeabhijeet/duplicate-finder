@@ -50,6 +50,7 @@ Theme_Changer()
 dirs = []
 dir_list = []
 value_on = []
+button_made = []
 scrollbar = ttk.Scrollbar(root)
 scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
 checklist = tk.Text(root, width=20, bd=0, pady=10)
@@ -59,7 +60,23 @@ def Check_Dupli_Button():
    ttk.Button(root, text="Done", command=Final).place(x=((root.winfo_width()//2)-60), y=((root.winfo_height())-30), width=120, height=25)
    ttk.Button(root, text="Exit", command=EXIT.exit).place(x=((root.winfo_width())-70), y=((root.winfo_height())-30), width=60, height=25)
 
+
+
 def Dir_picker():
+    for dir in dir_list:
+        if dir not in button_made:
+
+            varr = tk.IntVar()
+            varr.set(1)
+            value_on.append(varr)
+                
+            checkbutton = ttk.Checkbutton(root, variable=varr, text=dir)#.place(x = 150, y = (dir_no * 25) + 5, width=600, height=25 )
+            checklist.window_create("end", window=checkbutton)
+            checklist.insert("end", "\n")
+            Check_Dupli_Button()
+            button_made.append(dir)
+
+def dirs_list_maker():
     dir_no = 0
     
     dirs.append(tkfilebrowser.askopendirnames(title="Select directories to compare", foldercreation=False, okbuttontext="Done"))
@@ -73,36 +90,27 @@ def Dir_picker():
                 print(dir_list)
 
                 dir_no += 1
-                varr = tk.IntVar()
-                varr.set(1)
-                value_on.append(varr)
-                
-                checkbutton = ttk.Checkbutton(root, variable=varr, text=list(dirs[dir_tuple_no])[dir_no_in_tuple])#.place(x = 150, y = (dir_no * 25) + 5, width=600, height=25 )
-                checklist.window_create("end", window=checkbutton)
-                checklist.insert("end", "\n")
-                Check_Dupli_Button()
+    
+    Dir_picker()
 
 checklist.config(yscrollcommand=scrollbar.set)
 scrollbar.config(command=checklist.yview)
 checklist.configure(state="disabled",bg=style.lookup('TFrame', 'background'))
 
+
 def Final():
-    dir_no = 0
+    for dir in range(0, len(dir_list)):
+        print("DDDDDDDDDDDD: ", dir, dir_list[dir])
+        if (value_on[dir].get()==0):
+            print()
+        else:
+            print("stats: ",dir_list[dir], value_on[dir].get())
+            File_List = DF.ScanAll(dir_list[dir])      # Get the list of all the files present in the given directory
+            sqdatabase.FillDatabase(File_List, cur, Table_Name)
+            conn.commit()
+        print()  
 
-    for dir_tuple_no in range(0, len(dirs)):
-        for dir_no_in_tuple in range(0, len(list(dirs[dir_tuple_no]))):
-            dir_no += 1
-            
-            if (value_on[dir_no-1].get()==0):
-                print()
-            else:
-                print("stats: ",list(dirs[dir_tuple_no])[dir_no_in_tuple], value_on[dir_no-1].get())
-                File_List = DF.ScanAll(list(dirs[dir_tuple_no])[dir_no_in_tuple])      # Get the list of all the files present in the given directory
-                sqdatabase.FillDatabase(File_List, cur, Table_Name)
-                conn.commit()
-    print()    
-
-ttk.Button(root, text='Add a Directory', command=Dir_picker).place(x=5, y=5, width=120, height=25)
+ttk.Button(root, text='Add a Directory', command=dirs_list_maker).place(x=5, y=5, width=120, height=25)
 ttk.Checkbutton(root, text='Check Button').place(x = 150, y = 5, width=600, height=25 )
 
 root.mainloop()
