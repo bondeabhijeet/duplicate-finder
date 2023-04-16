@@ -6,7 +6,6 @@ from tkinter import ttk
 import tkinter as tk
 import tkfilebrowser
 import exit as EXIT
-import time
 
 class duplicate_finder:
     def __init__(self):
@@ -20,7 +19,7 @@ class duplicate_finder:
 
         self.root = tk.Tk()                                         # Root window for the GUI
         self.style = ttk.Style(self.root)                           # Creating the style attribute to add style to the GUI
-        self.root.geometry("1000x300")                              # Fixing the size of the opened window
+        self.root.geometry("700x300")                              # Fixing the size of the opened window
         self.dirs = []                                                  # List of multiple directories seleted from the tkfilebrowser (multiple selection gives a tuple)
         self.dir_list = []                                              # Separating directory from tuple to create a simple list
         self.value_on = []                                              # List of all the values that have tick's of selection
@@ -61,7 +60,7 @@ class duplicate_finder:
 
     def Done_Exit_button(self):
         self.start_button = ttk.Button(self.root, text="Start", command=self.Final).place(x=((self.root.winfo_width()//2)-60), y=((self.root.winfo_height())-30), width=120, height=25)
-        ttk.Button(self.root, text="Exit", command=EXIT.exit).place(x=((self.root.winfo_width())-70), y=((self.root.winfo_height())-30), width=60, height=25)
+        ttk.Button(self.root, text="Exit", command=EXIT.exit).place(x=((self.root.winfo_width())-90), y=((self.root.winfo_height())-30), width=60, height=25)
 
     def Dir_picker(self, args):
         for dir in self.dir_list:
