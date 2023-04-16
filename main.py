@@ -6,6 +6,7 @@ from tkinter import ttk
 import tkinter as tk
 import tkfilebrowser
 import exit as EXIT
+import time
 
 class duplicate_finder:
     def __init__(self):
@@ -28,7 +29,6 @@ class duplicate_finder:
         self.scrollbar.pack(side=tk.RIGHT, fill=tk.Y)                   # Packng the scrollbar
         self.checklist = tk.Text(self.root, width=20, bd=0, pady=10)    # This is used to append the buttons from the bottom of the list
         self.checklist.pack()
-
 
     def scrlbr(self):                                                   # Configuring the scollbar
         self.checklist.config(yscrollcommand=self.scrollbar.set)
@@ -58,14 +58,10 @@ class duplicate_finder:
 
         self.style.theme_use('awdark')                                      # Applying the theme
         self.root.configure(bg=self.style.lookup('TFrame', 'background'))
-        
-
 
     def Done_Exit_button(self):
-        ttk.Button(self.root, text="Done", command=self.Final).place(x=((self.root.winfo_width()//2)-60), y=((self.root.winfo_height())-30), width=120, height=25)
+        self.start_button = ttk.Button(self.root, text="Start", command=self.Final).place(x=((self.root.winfo_width()//2)-60), y=((self.root.winfo_height())-30), width=120, height=25)
         ttk.Button(self.root, text="Exit", command=EXIT.exit).place(x=((self.root.winfo_width())-70), y=((self.root.winfo_height())-30), width=60, height=25)
-
-
 
     def Dir_picker(self, args):
         for dir in self.dir_list:
@@ -99,12 +95,14 @@ class duplicate_finder:
         self.Dir_picker(self)
 
     def Final(self):
+        self.root.destroy()
+
         for dir in range(0, len(self.dir_list)):
-            print("DDDDDDDDDDDD: ", dir, self.dir_list[dir])
             if (self.value_on[dir].get()==0):
                 print()
             else:
                 print("stats: ", self.dir_list[dir], self.value_on[dir].get())
+                # ttk.Label(self.root, text=f" PROCESSNG").place(x=((self.root.winfo_width())-350), y=((self.root.winfo_height())-100))
                 File_List = DF.ScanAll(self.dir_list[dir])      # Get the list of all the files present in the given directory
                 sqdatabase.FillDatabase(File_List, self.cur, self.Table_Name)
                 self.conn.commit()
