@@ -7,14 +7,14 @@ scrollbar = ttk.Scrollbar(root)
 scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
 
 # create a list box
-langs = ('Java', 'C#', 'C', 'C++', 'Python',
-         'Go', 'JavaScript', 'PHP', 'Swift')
-var = tk.Variable(value=langs)
-listbox = tk.Listbox(root, listvariable=var, height=6, selectmode=tk.EXTENDED)
+# langs = ('Java', 'C#', 'C', 'C++', 'Python',
+#          'Go', 'JavaScript', 'PHP', 'Swift')
+# var = tk.Variable(value=langs)
+# listbox = tk.Listbox(root, listvariable=var, height=6, selectmode=tk.EXTENDED)
 
 checklist = tk.Text(root, width=600)
 checklist.pack()
-listbox.pack(expand=True, fill=tk.BOTH, side=tk.LEFT)
+# listbox.pack(expand=True, fill=tk.BOTH, side=tk.LEFT)
 
 vars = []
 for i in range(50):
